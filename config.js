@@ -1,4 +1,5 @@
 module.exports={
    MONGODB_URI: process.env.MONGODB_URI|| 'mongodb://localhost/genesis',
-    JWT_SECRET: process.env.JWT_SECRET || 'somethingsecret'
+    JWT_SECRET: process.env.JWT_SECRET || 'somethingsecret',
+    PORT:process.env.PORT || 5000
   }  

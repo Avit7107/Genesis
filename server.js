@@ -11,10 +11,12 @@ const productRoute=require("./routes/productRoute");
 const orderRoute=require("./routes/orderRoute")
 const connectDB = require("./mongodb");
 const PREFIX = "/api";
-const { isAuth, isAdmin }= require('./util');
+const path = require("path");
 
-dotenv.config();
 app.use(cors());
+dotenv.config();
+app.use(express.static(path.join(__dirname, "frontend/build")));
+app.use('/', express.static('frontend'));
 app.use(bodyParser.json());
  
 connectDB()
@@ -25,28 +27,9 @@ app.use("/api/orders", orderRoute);
 
 
 
-
-// app.get("/api/products/:id", (req, res) => {
-//   fs.readFile("products.json", (err, data) => {
-//     const products = JSON.parse(data);
-//     const productId = req.params.id;
-//     const product = products.find(x => x._id === productId);
-//     if (product)
-//       res.send(product);
-//     else
-//       res.status(404).send({ msg: "Product Not Found." })
-//   })
-//   });
-
-
-
-// app.get("/api/products", (req, res) => {
-//   fs.readFile("products.json", (err, data) => {
-//     const products = JSON.parse(data);
-//     console.log(products);
-//       res.send(products);
-//   });
-// });
-
-
-app.listen(5000, () => { console.log("Server started at http://localhost:5000") });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/frontend/build/index.html'));
+  });
+app.listen(config.PORT, () => {
+    console.log('Server started at http://localhost:5000');
+  });
